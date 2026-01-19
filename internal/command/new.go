@@ -128,6 +128,7 @@ func runNew(cmd *cobra.Command, outputDir, projectName string, resume bool) erro
 
 	// Generate files
 	fmt.Println("\n📄 Generating project files...")
+	fmt.Printf("   Output directory: %s\n", absOutputDir)
 
 	gen := generator.NewFileGenerator()
 	if err := gen.GenerateAll(interviewer.Session().Project, absOutputDir); err != nil {

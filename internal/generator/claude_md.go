@@ -111,7 +111,7 @@ const claudeMDTemplate = `# CLAUDE.md - {{.Project.Name}}
 ### Functional Requirements
 {{if .Project.Features}}
 {{range $i, $f := .Project.Features}}
-#### FR-{{$i | printf "%d"}}: {{$f.Name}}
+#### FR-{{$i}}: {{$f.Name}}
 {{if $f.Description}}{{$f.Description}}{{end}}
 {{if $f.IsMVP}}- **Priority:** MVP{{else}}- **Priority:** Post-MVP{{end}}
 {{end}}
@@ -259,7 +259,7 @@ const claudeMDTemplate = `# CLAUDE.md - {{.Project.Name}}
 ### Phase 2: Core Features
 {{if .Project.Features}}
 {{range $i, $f := .Project.Features}}
-{{if $f.IsMVP}}{{$i | printf "%d"}}. {{$f.Name}}
+{{if $f.IsMVP}}{{$i}}. {{$f.Name}}
 {{end}}{{end}}
 {{else}}
 (Features to be defined)

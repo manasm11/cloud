@@ -2,6 +2,7 @@
 package generator
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -30,7 +31,7 @@ func NewFileGenerator() *FileGenerator {
 func (g *FileGenerator) GenerateAll(project *domain.Project, outputDir string) error {
 	// Ensure output directory exists
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
-		return err
+		return fmt.Errorf("failed to create output directory %s: %w", outputDir, err)
 	}
 
 	// Generate tech stack suggestions if not already set
@@ -41,25 +42,25 @@ func (g *FileGenerator) GenerateAll(project *domain.Project, outputDir string) e
 	// Generate CLAUDE.md
 	claudeGen := NewClaudeMDGenerator()
 	if err := claudeGen.Generate(project, outputDir); err != nil {
-		return err
+		return fmt.Errorf("failed to generate CLAUDE.md: %w", err)
 	}
 
 	// Generate Makefile
 	makefileGen := NewMakefileGenerator()
 	if err := makefileGen.Generate(project, outputDir); err != nil {
-		return err
+		return fmt.Errorf("failed to generate Makefile: %w", err)
 	}
 
 	// Generate Dockerfile if Docker is enabled
 	if project.Deployment.UseDocker {
 		dockerGen := NewDockerfileGenerator()
 		if err := dockerGen.Generate(project, outputDir); err != nil {
-			return err
+			return fmt.Errorf("failed to generate Dockerfile: %w", err)
 		}
 
 		composeGen := NewComposeGenerator()
 		if err := composeGen.Generate(project, outputDir); err != nil {
-			return err
+			return fmt.Errorf("failed to generate docker-compose.yml: %w", err)
 		}
 	}
 
